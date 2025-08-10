@@ -5,6 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:store/core/constants/app_colors.dart';
+import 'package:store/core/init/dependency_injection.dart' show initServices;
+import 'package:store/core/services/api_services.dart' show ApiService;
 import 'package:store/core/services/shared_prfs_services.dart';
 import 'routes.dart';
 
@@ -12,14 +14,27 @@ void main()async {
 
   WidgetsFlutterBinding.ensureInitialized();
 
-  final prefs = await SharedPreferences.getInstance();
-  Get.put<SharedPreferenceService>(SharedPreferenceService(prefs), permanent: true);
 
-  runApp(MyApp());
+   await initServices();
+
+  final sharedPrefs = Get.find<SharedPreferenceService>();
+
+  print( sharedPrefs.isLoggind());
+
+
+
+
+
+   
+  
+
+  runApp(MyApp(isLoggind: sharedPrefs.isLoggind(),));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({super.key,required this.isLoggind});
+
+  final bool isLoggind;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +44,7 @@ class MyApp extends StatelessWidget {
       designSize: const Size(360.0,712.0),
       minTextAdapt: true,
       splitScreenMode: true,
+
       builder: (context, state) {
         return GetMaterialApp(
           theme: ThemeData(
@@ -36,7 +52,7 @@ class MyApp extends StatelessWidget {
             scaffoldBackgroundColor: AppColors.kWhite,
           ),
           title: 'Store',
-          initialRoute: AppPages.INITIAL,
+          initialRoute:  isLoggind ? '/home' : '/login',
           getPages: AppPages.routes,
         );
       },

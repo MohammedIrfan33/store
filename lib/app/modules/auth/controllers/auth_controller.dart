@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:store/app/modules/auth/model/user_model.dart';
-import 'package:store/app/modules/auth/services/auth_service.dart' show AuthRepository;
+import 'package:store/app/modules/auth/repository/auth_repo.dart' show AuthRepository;
 
 class AuthController extends GetxController {
   var isLoggedIn = false.obs;
@@ -42,6 +42,8 @@ class AuthController extends GetxController {
 
       Get.snackbar('Suceess', 'Login successfull!!');
 
+      Get.offAndToNamed('/home');
+
      
     } catch (e) {
      
@@ -51,7 +53,7 @@ class AuthController extends GetxController {
     }
   }
 
-  void getUser() async{
+  Future<void> getUser() async{
 
 
 
@@ -71,6 +73,34 @@ class AuthController extends GetxController {
        isLoading.value = false;
     }
   }
+
+
+  Future<void> logOut() async{
+
+    try{
+
+       isLoading.value = true;
+
+
+       await  authRepository.logout();
+
+    }catch (e){
+
+      Get.snackbar('Error', e.toString());
+
+
+
+    }finally{
+
+      isLoading.value = false;
+
+    }
+
+
+
+  }
+
+  
 
   @override
   void onClose() {

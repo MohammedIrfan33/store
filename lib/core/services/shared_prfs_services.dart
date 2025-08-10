@@ -22,8 +22,30 @@ class SharedPreferenceService {
     if (userJson == null) return null;
 
     final Map<String, dynamic> userMap = jsonDecode(userJson);
+   
+   
     return UserModel.fromJson(userMap);
   }
+
+
+  bool isLoggind() {
+    final userJson = _prefs.getString(_userKey);
+    if (userJson == null) return false;
+
+    final Map<String, dynamic> userMap = jsonDecode(userJson);
+
+
+
+
+    if(userMap['token'] != '' || userMap['token'] != null){
+
+      return true;
+    }
+   
+   
+    return  false;
+  }
+
 
   Future<bool> clear() async {
     return await _prefs.clear();

@@ -11,9 +11,7 @@ class AuthRepository {
   final ApiService apiService;
   final SharedPreferenceService sharedPreferences;
 
-  static const _keyUsername = 'username';
-  static const _keyIsLoggedIn = 'isLoggedIn';
-  static const _keyToken = 'token';
+
 
   AuthRepository({
     required this.apiService,
@@ -21,7 +19,7 @@ class AuthRepository {
   });
 
   Future<UserModel> login(String username, String password) async {
-    try {
+  
       final body = {
         'username': username.trim(),
         'password': password.trim(),
@@ -40,27 +38,21 @@ class AuthRepository {
         return user;
        
         
-    } catch (e) {
-      throw Exception(e.toString);
-    }
+   
   }
 
   Future<UserModel?> getLoggedInUser() async {
-    try {
-       final  user =  await sharedPreferences.getUser();
+  
+       final  user =   sharedPreferences.getUser();
 
       return user;
-    } catch (e) {
-      throw Exception('Error retrieving logged in user: ${e.toString()}');
-    }
+
   }
 
   Future<void> logout() async {
-    try {
+  
       await sharedPreferences.clear();
      
-    } catch (e) {
-      throw Exception('Error during logout: ${e.toString()}');
-    }
+   
   }
 }
