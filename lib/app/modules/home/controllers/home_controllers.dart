@@ -18,9 +18,20 @@ class HomeController extends GetxController {
 
   @override
   void onInit() {
+        
+
     super.onInit();
-    fetchProducts();
+     fetchProducts();
+   
+  }
+
+  @override
+  void onReady(){
+
+    super.onReady();
+
     getUserDetails();
+    
   }
 
   Future<void> fetchProducts() async {
@@ -52,37 +63,33 @@ class HomeController extends GetxController {
   }
 
   Future<void> fetchProductDetail(int id) async {
-    try {
+  
       isLoading.value = true;
       selectedProduct.value = await repository.getProductById(id);
-    } catch (e) {
-      Get.snackbar("Error", e.toString());
-    } finally {
+    
+  
       isLoading.value = false;
-    }
+    
   }
 
   Future<void> logout() async {
     try {
       await authController.logOut();
-      Get.offAllNamed('/login');
+      Get.offAndToNamed('/login');
     } catch (e) {
       Get.snackbar("Logout Error", "Failed to log out: ${e.toString()}");
     }
   }
 
   Future<void> getUserDetails() async {
-    try {
 
-      isLoading.value = true;
+    isLoading.value = true;
 
       await authController.getUser();
-    } catch (e) {
-            isLoading.value = false;
+    isLoading.value = false;
 
-      Get.snackbar("Error", "Failed to fetch user details: ${e.toString()}");
-    } finally{
-      isLoading.value = true;
-    }
+    
+
+   
   }
 }

@@ -10,7 +10,7 @@ class ApiService {
   Future<dynamic> get(String endpoint) async {
     try {
       final response = await http.get(Uri.parse('${ApiConstants.baseUrl}$endpoint'));
-      print(response.body);
+      
      return ApiResponseHandler.handleResponse(response);
 
     } catch (e) {
@@ -19,7 +19,6 @@ class ApiService {
   }
 
   Future<Map<String, dynamic>> post(String endpoint, Map<String, dynamic> body) async {
-    try {
       final response = await http.post(
         Uri.parse('${ApiConstants.baseUrl}$endpoint'
 ),
@@ -30,8 +29,6 @@ class ApiService {
            return ApiResponseHandler.handleResponse(response);
 
       
-    } catch (e) {
-      throw Exception('Error during POST request: $e');
-    }
+    
   }
 }

@@ -5,6 +5,7 @@ import 'package:store/app/modules/auth/views/login_view.dart';
 import 'package:store/app/modules/home/bindings/home_bings.dart' show HomeBinding;
 import 'package:store/app/modules/home/views/home_view.dart' show HomeView;
 import 'package:store/app/modules/home/views/product_details_view.dart' show ProductDetailView;
+import 'package:store/app/modules/welcome/view/welcome_view.dart' show WelcomeView;
 
 import 'app/modules/auth/bindings/auth_bindings.dart';
 
@@ -12,6 +13,11 @@ import 'app/modules/auth/bindings/auth_bindings.dart';
 class AppPages {
 
   static final routes = [
+
+    GetPage(
+      name: '/welcome',
+      page: () => const WelcomeView(),
+    ),
     GetPage(
       name: '/login',
       page: () => LoginScreen(),
@@ -28,6 +34,7 @@ GetPage(
   page: () => const ProductDetailView(),
   binding: HomeBinding(), // Reuse home binding
 ),
+
 
   ];
 }

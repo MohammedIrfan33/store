@@ -19,7 +19,6 @@ void main()async {
 
   final sharedPrefs = Get.find<SharedPreferenceService>();
 
-  print( sharedPrefs.isLoggind());
 
 
 
@@ -44,15 +43,15 @@ class MyApp extends StatelessWidget {
       designSize: const Size(360.0,712.0),
       minTextAdapt: true,
       splitScreenMode: true,
-
       builder: (context, state) {
         return GetMaterialApp(
+          debugShowCheckedModeBanner: false,
           theme: ThemeData(
             fontFamily: 'Montserrat',
             scaffoldBackgroundColor: AppColors.kWhite,
           ),
           title: 'Store',
-          initialRoute:  isLoggind ? '/home' : '/login',
+          initialRoute:  isLoggind ? '/home' : '/welcome',
           getPages: AppPages.routes,
         );
       },

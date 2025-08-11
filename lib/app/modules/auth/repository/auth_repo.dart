@@ -11,48 +11,27 @@ class AuthRepository {
   final ApiService apiService;
   final SharedPreferenceService sharedPreferences;
 
-
-
-  AuthRepository({
-    required this.apiService,
-    required this.sharedPreferences,
-  });
+  AuthRepository({required this.apiService, required this.sharedPreferences});
 
   Future<UserModel> login(String username, String password) async {
-  
-      final body = {
-        'username': username.trim(),
-        'password': password.trim(),
-      };
+    final body = {'username': username.trim(), 'password': password.trim()};
 
-      final response = await apiService.post(ApiConstants.loginEndpoint, body);
+    final response = await apiService.post(ApiConstants.loginEndpoint, body);
 
-        
+    final user = UserModel(username: username, token: response['token']);
 
-        final user = UserModel(username: username, token: response['token'] );
+    await sharedPreferences.setUser(user);
 
-
- 
-        await sharedPreferences.setUser(user);
-
-        return user;
-       
-        
-   
+    return user;
   }
 
   Future<UserModel?> getLoggedInUser() async {
-  
-       final  user =   sharedPreferences.getUser();
+    final user = sharedPreferences.getUser();
 
-      return user;
-
+    return user;
   }
 
   Future<void> logout() async {
-  
-      await sharedPreferences.clear();
-     
-   
+    await sharedPreferences.clear();
   }
 }
