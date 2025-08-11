@@ -1,5 +1,6 @@
 // lib/app/modules/home/controllers/home_controller.dart
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:store/app/modules/home/model/product_model.dart' show ProductModel;
 import 'package:store/app/modules/home/repository/home_repo.dart';
@@ -21,26 +22,24 @@ class HomeController extends GetxController {
         
 
     super.onInit();
-     fetchProducts();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+    fetchProducts();
+  });
+
    
   }
 
-  @override
-  void onReady(){
-
-    super.onReady();
-
-    getUserDetails();
-    
-  }
+ 
 
   Future<void> fetchProducts() async {
     try {
       isLoading.value = true;
+      await authController.getUser();
       final fetchedProducts = await repository.getProducts();
       products.value = fetchedProducts;
-      filteredProducts.value = fetchedProducts; // Initially show all
+      filteredProducts.value = fetchedProducts; 
     } catch (e) {
+      
       Get.snackbar("Error", e.toString());
     } finally {
       isLoading.value = false;
@@ -65,6 +64,7 @@ class HomeController extends GetxController {
   Future<void> fetchProductDetail(int id) async {
   
       isLoading.value = true;
+
       selectedProduct.value = await repository.getProductById(id);
     
   
@@ -75,21 +75,10 @@ class HomeController extends GetxController {
   Future<void> logout() async {
     try {
       await authController.logOut();
-      Get.offAndToNamed('/login');
+      Get.offNamedUntil('/login',(route) => false,);
     } catch (e) {
       Get.snackbar("Logout Error", "Failed to log out: ${e.toString()}");
     }
   }
 
-  Future<void> getUserDetails() async {
-
-    isLoading.value = true;
-
-      await authController.getUser();
-    isLoading.value = false;
-
-    
-
-   
-  }
 }

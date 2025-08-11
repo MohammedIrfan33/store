@@ -16,6 +16,13 @@ class LoginScreen extends StatelessWidget {
     AuthController(authRepository: Get.find()),
   );
 
+  TextEditingController usernameTextController = TextEditingController();
+  TextEditingController passwordTextController = TextEditingController();
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,7 +60,7 @@ class LoginScreen extends StatelessWidget {
                   SizedBox(height: 40.h),
         
                   CustomTextField(
-                    controller: authController.usernameTextController,
+                    controller: usernameTextController,
                     icon: RemixIcons.user_line,
                     hintText: "Enter your username",
                     labelText: "Username",
@@ -67,7 +74,7 @@ class LoginScreen extends StatelessWidget {
                   SizedBox(height: 20.h),
         
                   CustomTextField(
-                    controller: authController.passwordTextController,
+                    controller: passwordTextController,
                     icon: RemixIcons.lock_line,
                     hintText: "Enter your password",
                     labelText: "Password",
@@ -115,7 +122,7 @@ class LoginScreen extends StatelessWidget {
                           height: 50.h,
                           child: ButtonWidget(
                             onPressed: () async {
-                              await authController.login();
+                              await authController.login(usernameTextController.text,passwordTextController.text);
                             },
                             text: 'Login',
                           ),

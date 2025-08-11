@@ -18,24 +18,23 @@ class AuthController extends GetxController {
   var isPasswordHidden = true.obs;
   var isLoading = false.obs;
 
-  TextEditingController usernameTextController = TextEditingController();
-  TextEditingController passwordTextController = TextEditingController();
-
+  
   AuthController({required this.authRepository});
 
   void togglePasswordVisibility() {
     isPasswordHidden.value = !isPasswordHidden.value;
   }
 
-  Future<void> login() async {
+  Future<void> login(String username,String password) async {
     if (!(formKey.currentState?.validate() ?? false)) return;
 
     try {
       isLoading.value = true;
 
       final response = await authRepository.login(
-        usernameTextController.text.trim(),
-        passwordTextController.text,
+        username,
+        password
+       
       );
 
       user = response;
@@ -104,8 +103,7 @@ class AuthController extends GetxController {
 
   @override
   void onClose() {
-    usernameTextController.dispose();
-    passwordTextController.dispose();
+   
     super.onClose();
   }
 }

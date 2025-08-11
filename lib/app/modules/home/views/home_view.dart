@@ -36,9 +36,9 @@ class HomeView extends GetView<HomeController> {
       style: TextStyle(fontWeight: FontWeight.bold),
     ),
     content: const Text("Are you sure you want to log out?"),
-    actions: controller.authController.isLoading.value
-        ? []
-        : [
+    actions:
+        
+        [
             TextButton(
               onPressed: () => Get.back(),
               style: TextButton.styleFrom(

@@ -121,7 +121,7 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                       ],
                     ),
 
-                    const SizedBox(height: 30),
+                     SizedBox(height: 20.h),
 
                     Text(
                       'Description',
@@ -149,7 +149,7 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                         ButtonWidget(onPressed: () {}, text: 'Add to cart'),
                       ],
                     ),
-                    const SizedBox(height: 8),
+                   
                   ],
                 ),
               ),
